@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private String storedHashedPassword = hashPassword("1234");
     private EditText textUsername;
     private EditText textPassword;
     private Button buttonLogin;
@@ -56,10 +56,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean login(String username, String password) {
-        String hashedPassword = hashPassword("1234");
-        return username.equals("root") && checkPassword(password, hashedPassword);
+        return username.equals("a231831as") && checkPassword(password, storedHashedPassword);
     }
-
 
     //Encriptacio en HASH
     private String hashPassword(String password) {
