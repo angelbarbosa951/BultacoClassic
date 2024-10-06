@@ -1,4 +1,4 @@
-package com.example.bultacocatalogo;
+package com.example.bultacocatalogo.model;
 
 public class Bultaco {
     private String urlImage;
