@@ -16,6 +16,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 public class LoginActivity extends AppCompatActivity {
     private String storedHashedPassword = hashPassword("1234");
+
     private EditText textUsername;
     private EditText textPassword;
     private Button buttonLogin;
@@ -49,6 +50,14 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(LoginActivity.this, "Error username or password.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, SIngUpActivity.class);
+                startActivity(intent);
             }
         });
 
