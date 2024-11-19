@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean login(String username, String password) {
-        return username.equals("a231831as") && checkPassword(password, storedHashedPassword);
+        return username.equals("a") && checkPassword(password, storedHashedPassword);
     }
 
     //Encriptacio en HASH

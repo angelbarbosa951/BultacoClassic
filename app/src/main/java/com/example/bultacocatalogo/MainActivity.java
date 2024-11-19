@@ -2,11 +2,22 @@ package com.example.bultacocatalogo;
 
 import android.os.Bundle;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
+
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bultacocatalogo.model.Bultaco;
+
 
 import java.util.ArrayList;
 
@@ -14,20 +25,76 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Bultaco> bultacos = new ArrayList<>();
     private RecyclerView recyclerView;
+    private SearchView searchView;
+    private Toolbar toolbar;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.my_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.settings){
+            Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if (item.getItemId() == R.id.photo){
+            Toast.makeText(this, "photo", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if (item.getItemId() == R.id.print){
+            Toast.makeText(this, "print", Toast.LENGTH_SHORT).show();
+            return true;
+        }else if (item.getItemId() == R.id.mail){
+            Toast.makeText(this, "mail", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         //HOOK:
         recyclerView = findViewById(R.id.recyclerView);
-        initData();
+        searchView = findViewById(R.id.searchView);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         MyAdapter myAdapter = new MyAdapter(bultacos, this);
         recyclerView.setAdapter(myAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        //Esto lo classifica en lineas, tambien se puede poner en horizontal, en true te lo mustra al reveès
+        recyclerView.setLayoutManager(
+                new GridLayoutManager(
+                        this,1,RecyclerView.VERTICAL,false
+
+                )
+        );
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                //Call filter
+                myAdapter.filter(newText);
+
+                return false;
+            }
+        });
+
+        initData();
 
     }
 

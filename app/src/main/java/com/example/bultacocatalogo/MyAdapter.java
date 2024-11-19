@@ -17,15 +17,20 @@ import com.example.bultacocatalogo.model.Bultaco;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
     private ArrayList<Bultaco> mBultacos;
-    private Context mContext;
+    private Context mContext; //Al tenir vistes li hem de afegir el context, per mostrar la fila al layout etc
+    private List<Bultaco> fullList;
+
 
     public MyAdapter(ArrayList<Bultaco> mBultacos, Context mContext) {
         this.mBultacos = mBultacos;
         this.mContext = mContext;
+        this.fullList = new ArrayList<>(mBultacos);
     }
 
 
@@ -34,15 +39,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.my_row, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(mContext); //Inflate vol dir crear (crear un layout)
+        View view = inflater.inflate(R.layout.my_row, parent, false); //true per si estes dins un altre view com un spinner.
 
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        Picasso.get().load(mBultacos.get(position).getUrlImage())
+        Picasso.get().load(mBultacos.get(position).getUrlImage()) //Aqui android ja sap quin has clicat, i amb mBultacos agafes de la classe main.
                 .fit()
                 .centerCrop()
                 .into(holder.imageView);
@@ -100,7 +105,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
             textBirthYear = itemView.findViewById(R.id.textBirthYear);
             textVersions = itemView.findViewById(R.id.textVersions);
 
-
             rowLayout = itemView.findViewById(R.id.rowLayout);
 
         }
@@ -109,6 +113,26 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder>{
 
 
 
+    }
+
+    public void filter (String searchText){
+        int length = searchText.length();
+        if (length == 0){
+            mBultacos.clear();
+            mBultacos.addAll(fullList);
+        }else{
+            //Filter
+            List<Bultaco> collection = mBultacos
+                    .stream()
+                    .filter(
+                            i -> i.getType().toLowerCase().contains(searchText.toLowerCase())
+                            || i.getNickname().toLowerCase().contains(searchText.toLowerCase())
+                    )
+                    .collect(Collectors.toList());
+            mBultacos.clear();
+            mBultacos.addAll(collection);
+        }
+        notifyDataSetChanged();
     }
 
 

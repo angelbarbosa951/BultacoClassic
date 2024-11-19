@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_setting"
+        android:title="Settings"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mail"
+        android:icon="@drawable/ic_mail"
+        android:title="Mail"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/print"
+        android:icon="@drawable/ic_print"
+        android:title="Print"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/photo"
+        android:icon="@drawable/ic_photo"
+        android:title="Photo"
+        app:showAsAction="always" />
+</menu>
